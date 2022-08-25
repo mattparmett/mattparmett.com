@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<head>
+	<meta charset="utf-8">
+	<title>Understanding Git Internals</title>
+	<meta name="description" content="">
+	<meta name="author" content="Matt Parmett">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+	<link rel="stylesheet" href="../../stylesheets/base.css">
+	<link rel="stylesheet" href="../../stylesheets/skeleton.css">
+	<link rel="stylesheet" href="../../stylesheets/layout.css">
+</head>
+
+<body>
+	<div class="container">
+		<div class="sixteen columns">
+			<h1 id="title" class="add-top">Understanding Git Internals</h1>
+			<p><em>August 22, 2022<br />
+					<a href="pyle_index.html">Return to blog index</a></em></p>
+			<p>One of our goals for <code>pyle</code> is full interoperability with
+git and existing git repositories. So, before we start writing code for
+<code>pyle</code>, let’s take a look inside a git repository and examine
+the internal structure of a repo.</p>
+<p>We’ll be making use of the <code>tree</code> command during our
+exploration, so go ahead and install that if you don’t already have it
+(<code>brew install tree</code> on MacOS).</p>
+<p>Let’s navigate to an empty directory and run <code>git init</code>.
+This command creates the <code>.git</code> folder, which we can explore
+with <code>tree</code>. Running <code>tree .git</code> shows us the
+structure of the <code>.git</code> folder:</p>
+<pre><code>.git
+├── HEAD
+├── branches
+├── config
+├── description
+├── hooks
+│   ├── applypatch-msg.sample
+│   ├── commit-msg.sample
+│   ├── fsmonitor-watchman.sample
+│   ├── post-update.sample
+│   ├── pre-applypatch.sample
+│   ├── pre-commit.sample
+│   ├── pre-merge-commit.sample
+│   ├── pre-push.sample
+│   ├── pre-rebase.sample
+│   ├── pre-receive.sample
+│   ├── prepare-commit-msg.sample
+│   └── update.sample
+├── info
+│   └── exclude
+├── objects
+│   ├── info
+│   └── pack
+└── refs
+    ├── heads
+    └── tags</code></pre>
+<p>If you’re already familiar with git, you’ll recognize a few items in
+this directory, such as <code>HEAD</code> and <code>branches</code>.
+Let’s examine each of the important items and subdirectories.</p>
+<h4 id="head"><code>HEAD</code></h4>
+<p><code>HEAD</code> contains a reference to the commit that is
+currently checked out. This reference may be a direct reference to the
+commit’s ID or a symbolic reference (<code>symref</code>) to the current
+branch. When a new commit is made, that new commit’s parent will be the
+commit referenced by <code>HEAD</code>.</p>
+<p>If we examine our empty repo’s <code>HEAD</code> file, we see:</p>
+<pre><code>ref: refs/heads/master</code></pre>
+<p>This indicates that <code>HEAD</code> contains a symref to the
+<code>master</code> branch.</p>
+<h4 id="config"><code>config</code></h4>
+<p>Running <code>cat .git/config</code> shows us:</p>
+<pre><code>[core]
+    repositoryformatversion = 0
+    filemode = true
+    bare = false
+    logallrefupdates = true
+    ignorecase = true
+    precomposeunicode = true</code></pre>
+<p>We can see that this contains some instructions for git. These are
+repo-specific settings (i.e. they do not persist across git to other
+repos).</p>
+<h4 id="description"><code>description</code></h4>
+<p>In my test repo, <code>description</code> contains:</p>
+<pre><code>Unnamed repository; edit this file &#39;description&#39; to name the repository.</code></pre>
+<p>So we can assume that this file contains the name of the repo,
+presumably to display as part of a list of repos, perhaps on a remote
+server.</p>
+<h4 id="hooks"><code>hooks</code></h4>
+<p>The <code>hooks</code> directory appears to contain scripts that
+perform actions at various points in a commit, merge, rebase, or other
+git operation. There are a few sample scripts that are included when a
+repo is initialized; we could remove the <code>.sample</code> extension
+to make these run as valid hooks.</p>
+<h4 id="info"><code>info</code></h4>
+<p>The <code>info</code> directory contains miscellaneous metadata. If
+we examine <code>exclude</code> we see:</p>
+<pre><code># git ls-files --others --exclude-from=.git/info/exclude
+# Lines that start with &#39;#&#39; are comments.
+# For a project mostly in C, the following would be a good set of
+# exclude patterns (uncomment them if you want to use them):
+# *.[oa]
+# *~
+.DS_Store</code></pre>
+<p>So we can conclude that <code>exclude</code> lists files to be
+excluded from the git repo. This is a bit different than using a
+<code>.gitignore</code> file, as <code>.gitignore</code> will be
+included in the repo and can be shared amongst repo contributors, while
+<code>exclude</code> is not.</p>
+<h4 id="objects"><code>objects</code></h4>
+<p>This is where git stores its database; the database includes all
+files and assets in the repository. There are some additional
+subdirectories relating to <code>pack</code>s, which appear to relate to
+compressed files; we will ignore those for now.</p>
+<h4 id="refs"><code>refs</code></h4>
+<p>The <code>refs</code> directory stores <code>ref</code>erences to
+objects in the repo’s database. These pointers are stored on disk as
+files that contain the ID (SHA-1 hash) of certain commits.</p>
+<h3 id="wrap-up">Wrap up</h3>
+<p>A “minimum viable repo” will only need to contain a subset of these
+files and directories. For example, we won’t need hooks, info,
+description, or config right away, so we won’t focus on those until we
+have <code>pyle</code> self-serving. We can also temporarily ignore
+<code>HEAD</code>, as our minimum viable repo will not need to include
+support for branches (our <code>HEAD</code> will be the last commit on
+<code>master</code>). We will, however, need the <code>objects</code>
+and <code>refs</code> directories, as those are critical for storing and
+referencing objects.</p>
+<p>That covers the contents of an empty git repo - next time we’ll
+explore what is created when we make a commit.</p>
+			<p><em><a href="pyle_index.html">Return to blog index</a></em></p>
+		</div>
+	</div>
+</body>
+</html>
