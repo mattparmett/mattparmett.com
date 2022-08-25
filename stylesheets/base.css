@@ -338,5 +338,21 @@
 	.remove-bottom { margin-bottom: 0 !important; }
 	.half-bottom { margin-bottom: 10px !important; }
 	.add-bottom { margin-bottom: 20px !important; }
+	.add-top { margin-top: 20px !important; }
 
+	code {
+		padding: 0rem .3rem;
+		margin: 0 .1rem;
+		font-size: 90%;
+		white-space: nowrap;
+		background: #F1F1F1;
+		border: 1px solid #E1E1E1;
+		border-radius: 4px;
+	}
+
+	pre > code {
+		display: block;
+		padding: 1rem 1.5rem;
+		white-space: pre;
+	}
 
