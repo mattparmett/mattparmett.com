@@ -25,17 +25,20 @@ version control. Otherwise, we wouldn’t be able to make use of version
 control during development!</p>
 <p>In particular, we are going to skip several features that are
 must-haves for a full-featured git clone, but which aren’t actually
-important to us at this early stage of the project: - We won’t have
-support for subdirectories, executable files, or symlinks. This will
-allow us to simplify our representation of trees in early versions of
-<code>pyle</code>. - Our early versions of <code>pyle</code> won’t
-include the <code>add</code> command, or any concept of the git index.
-Instead, we will only support committing changes to the repo directly.
-While this isn’t ideal in a normal project scenario, this should be fine
-for purposes of getting our early code into version control. -
-Furthermore, our <code>commit</code> command won’t have any command line
-flags or arguments - we can read from environment variables or stdin as
-needed.</p>
+important to us at this early stage of the project:</p>
+<ol type="1">
+<li>We won’t have support for subdirectories, executable files, or
+symlinks. This will allow us to simplify our representation of trees in
+early versions of <code>pyle</code>.</li>
+<li>Our early versions of <code>pyle</code> won’t include the
+<code>add</code> command, or any concept of the git index. Instead, we
+will only support committing changes to the repo directly. While this
+isn’t ideal in a normal project scenario, this should be fine for
+purposes of getting our early code into version control.</li>
+<li>Our <code>commit</code> command won’t have any command line flags or
+arguments - we can read from environment variables or stdin as
+needed.</li>
+</ol>
 <p>That’s quite a bit that will be missing from our early version of
 <code>pyle</code>…all the motivation to get those features built so we
 can use them!</p>
