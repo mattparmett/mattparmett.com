@@ -118,12 +118,15 @@ class="sourceCode python"><code class="sourceCode python"><span id="cb2-1"><a hr
 <span id="cb2-41"><a href="#cb2-41" aria-hidden="true" tabindex="-1"></a>  <span class="co"># We don&#39;t yet support any commands aside from init</span></span>
 <span id="cb2-42"><a href="#cb2-42" aria-hidden="true" tabindex="-1"></a>  <span class="bu">print</span>(<span class="ss">f&quot;pyle: </span><span class="sc">{</span> command <span class="sc">}</span><span class="ss"> is not a pyle command.&quot;</span>, <span class="bu">file</span><span class="op">=</span>sys.stderr)</span>
 <span id="cb2-43"><a href="#cb2-43" aria-hidden="true" tabindex="-1"></a>  exit(<span class="dv">1</span>)</span></code></pre></div>
-<p>Our script does a few key things: 1. Parses the command line
-arguments passed to <code>pyle.py</code> to identify the command passed
-to the script 2. Checks if the <code>init</code> command was passed 3.
-Gets the repo path passed by the user, defaulting to the current working
-directory if no path was given 4. Creates the <code>objects</code> and
-<code>refs</code> directories</p>
+<p>Our script does a few key things: 
+	<ol type="1">
+		<li>Parses the command line arguments passed to <code>pyle.py</code> to identify the command passed
+to the script </li>
+		<li>Checks if the <code>init</code> command was passed </li>
+		<li>Gets the repo path passed by the user, defaulting to the current working
+directory if no path was given </li>
+		<li>Creates the <code>objects</code> and
+			<code>refs</code> directories</p></li></ol>
 <p>Now that we have our repo structure set up, we are ready to make our
 first commit.</p>
 <h3 id="the-commit-command">The <code>commit</code> command</h3>
