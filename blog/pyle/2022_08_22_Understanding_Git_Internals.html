@@ -9,6 +9,10 @@
 	<link rel="stylesheet" href="../../stylesheets/base.css">
 	<link rel="stylesheet" href="../../stylesheets/skeleton.css">
 	<link rel="stylesheet" href="../../stylesheets/layout.css">
+	<link rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/default.min.css">
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
+	<script>hljs.highlightAll();</script>
 </head>
 
 <body>
@@ -28,7 +32,7 @@ exploration, so go ahead and install that if you don’t already have it
 This command creates the <code>.git</code> folder, which we can explore
 with <code>tree</code>. Running <code>tree .git</code> shows us the
 structure of the <code>.git</code> folder:</p>
-<pre><code>.git
+<pre><code class="nohighlight">.git
 ├── HEAD
 ├── branches
 ├── config
@@ -81,7 +85,7 @@ repo-specific settings (i.e. they do not persist across git to other
 repos).</p>
 <h4 id="description"><code>description</code></h4>
 <p>In my test repo, <code>description</code> contains:</p>
-<pre><code>Unnamed repository; edit this file &#39;description&#39; to name the repository.</code></pre>
+<pre><code class="nohighlight">Unnamed repository; edit this file &#39;description&#39; to name the repository.</code></pre>
 <p>So we can assume that this file contains the name of the repo,
 presumably to display as part of a list of repos, perhaps on a remote
 server.</p>

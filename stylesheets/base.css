@@ -353,6 +353,7 @@
 	}
 
 	pre > code {
+		font-family: Menlo, Monaco, 'Lucida Console', Consolas, monospace;
 		display: block;
 		padding: 0.5rem 1rem 0.5rem 1rem;
 		white-space: pre;
